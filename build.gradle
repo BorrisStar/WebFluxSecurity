@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version "$springBootVersion"
+	id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
+}
+
+group = 'com.example'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.session:spring-session-core'
+	implementation "org.flywaydb:flyway-core:$flywayDbVersion"
+	implementation "com.google.code.findbugs:jsr305:$googleFindBugsVersion"
+
+	implementation "org.mapstruct:mapstruct:$mapStructVersion"
+	implementation "org.mapstruct:mapstruct-processor:$mapStructVersion"
+	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+	implementation "io.jsonwebtoken:jjwt-api:$jsonWebTokenVersion"
+	implementation "io.jsonwebtoken:jjwt-impl:$jsonWebTokenVersion"
+	implementation "io.jsonwebtoken:jjwt-jackson:$jsonWebTokenVersion"
+	implementation "jakarta.xml.bind:jakarta.xml.bind-api:$jaxbApiVersion"
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly "org.postgresql:postgresql:$postgresqlVersion"
+	runtimeOnly "io.r2dbc:r2dbc-postgresql:$r2dbcVersion"
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
