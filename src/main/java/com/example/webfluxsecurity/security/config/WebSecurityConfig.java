@@ -1,6 +1,7 @@
 package com.example.webfluxsecurity.security.config;
 
 import com.example.webfluxsecurity.security.AuthenticationManager;
+import com.example.webfluxsecurity.security.AuthenticationProvider;
 import com.example.webfluxsecurity.security.JwtTokenProvider;
 import com.example.webfluxsecurity.security.converter.BearerTokenServerAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import reactor.core.publisher.Mono;
 public class WebSecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationProvider authenticationProvider;
 
     private final String[] publicRoutes = {"/api/v1/auth/register", "/api/v1/auth/login"};
 
@@ -56,7 +58,7 @@ public class WebSecurityConfig {
         AuthenticationWebFilter bearerAuthenticationFilter = new AuthenticationWebFilter(authenticationManager);
         bearerAuthenticationFilter.setServerAuthenticationConverter(
                 new BearerTokenServerAuthenticationConverter(
-                        authenticationManager,
+                        authenticationProvider,
                         jwtTokenProvider)
         );
 

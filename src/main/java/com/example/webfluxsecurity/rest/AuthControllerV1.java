@@ -21,36 +21,36 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthControllerV1 {
-//    private final JwtTokenProvider jwtTokenProvider;
-//    private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
     private final UserMapper userMapper;
 
 
-//    @PostMapping("/register")
-//    public Mono<UserDto> register(@RequestBody UserDto dto) {
-//        UserEntity entity = userMapper.mapToEntity(dto);
-//        return userService.registerUser(entity)
-//                .map(userMapper::mapToDto);
-//    }
-//
-//    @PostMapping("/login")
-//    public Mono<AuthResponseDto> login(@RequestBody AuthRequestDto dto) {
-//        return jwtTokenProvider.authenticate(dto.getUsername(), dto.getPassword())
-//                .flatMap(tokenDetails -> Mono.just(
-//                        AuthResponseDto.builder()
-//                                .userId(tokenDetails.getUserId())
-//                                .token(tokenDetails.getToken())
-//                                .issuedAt(tokenDetails.getIssuedAt())
-//                                .expiresAt(tokenDetails.getExpiresAt())
-//                                .build()
-//                ));
-//    }
-//
-//    @GetMapping("/info")
-//    public Mono<UserDto> getUserInfo(Authentication authentication) {
-//        CustomPrincipal customPrincipal = (CustomPrincipal) authentication.getPrincipal();
-//
-//        return userService.getUserById(customPrincipal.getId())
-//                .map(userMapper::mapToDto);
-//    }
+    @PostMapping("/register")
+    public Mono<UserDto> register(@RequestBody UserDto dto) {
+        UserEntity entity = userMapper.mapToEntity(dto);
+        return userService.registerUser(entity)
+                .map(userMapper::mapToDto);
+    }
+
+    @PostMapping("/login")
+    public Mono<AuthResponseDto> login(@RequestBody AuthRequestDto dto) {
+        return jwtTokenProvider.authenticate(dto.getUsername(), dto.getPassword())
+                .flatMap(tokenDetails -> Mono.just(
+                        AuthResponseDto.builder()
+                                .userId(tokenDetails.getUserId())
+                                .token(tokenDetails.getToken())
+                                .issuedAt(tokenDetails.getIssuedAt())
+                                .expiresAt(tokenDetails.getExpiresAt())
+                                .build()
+                ));
+    }
+
+    @GetMapping("/info")
+    public Mono<UserDto> getUserInfo(Authentication authentication) {
+        CustomPrincipal customPrincipal = (CustomPrincipal) authentication.getPrincipal();
+
+        return userService.getUserById(customPrincipal.getId())
+                .map(userMapper::mapToDto);
+    }
 }
