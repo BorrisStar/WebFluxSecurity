@@ -29,7 +29,7 @@ public class AuthControllerV1 {
     @PostMapping("/register")
     public Mono<UserDto> register(@RequestBody UserDto dto) {
         UserEntity entity = userMapper.mapToEntity(dto);
-        return userService.registerUser(entity)
+        return userService.register(entity)
                 .map(userMapper::mapToDto);
     }
 

@@ -18,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Mono<UserEntity> registerUser(UserEntity user) {
+    public Mono<UserEntity> register(UserEntity user) {
         return userRepository.save(
                 user.toBuilder()
                         .password(passwordEncoder.encode(user.getPassword()))
@@ -28,7 +28,7 @@ public class UserService {
                         .updatedAt(LocalDateTime.now())
                         .build()
         ).doOnSuccess(u -> {
-            log.info("IN registerUser - user: {} created", u);
+            log.info("IN register - user: {} created", u);
         });
     }
 
