@@ -1,8 +1,8 @@
 package com.example.webfluxsecurity.security.config;
 
-import com.example.webfluxsecurity.security.AuthenticationManager;
-import com.example.webfluxsecurity.security.AuthenticationProvider;
-import com.example.webfluxsecurity.security.JwtTokenProvider;
+import com.example.webfluxsecurity.security.authentication.AuthenticationManager;
+import com.example.webfluxsecurity.security.authentication.AuthenticationProvider;
+import com.example.webfluxsecurity.security.jwtprovider.JwtTokenProvider;
 import com.example.webfluxsecurity.security.converter.BearerTokenServerAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

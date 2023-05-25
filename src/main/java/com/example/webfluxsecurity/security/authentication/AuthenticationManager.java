@@ -1,4 +1,4 @@
-package com.example.webfluxsecurity.security;
+package com.example.webfluxsecurity.security.authentication;
 
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.exception.UnauthorizedException;

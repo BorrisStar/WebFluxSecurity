@@ -1,4 +1,4 @@
-package com.example.webfluxsecurity.security;
+package com.example.webfluxsecurity.security.authentication;
 
 import com.example.webfluxsecurity.security.model.CustomPrincipal;
 import com.example.webfluxsecurity.security.model.TokenValidationResult;

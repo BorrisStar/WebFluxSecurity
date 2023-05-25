@@ -5,7 +5,7 @@ import com.example.webfluxsecurity.dto.AuthResponseDto;
 import com.example.webfluxsecurity.dto.UserDto;
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.mapper.UserMapper;
-import com.example.webfluxsecurity.security.JwtTokenProvider;
+import com.example.webfluxsecurity.security.jwtprovider.JwtTokenProvider;
 import com.example.webfluxsecurity.security.model.CustomPrincipal;
 import com.example.webfluxsecurity.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,6 @@ public class AuthControllerV1 {
     @GetMapping("/info")
     public Mono<UserDto> getUserInfo(Authentication authentication) {
         CustomPrincipal customPrincipal = (CustomPrincipal) authentication.getPrincipal();
-
         return userService.getUserById(customPrincipal.getId())
                 .map(userMapper::mapToDto);
     }

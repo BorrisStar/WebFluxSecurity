@@ -1,7 +1,7 @@
 package com.example.webfluxsecurity.security.converter;
 
-import com.example.webfluxsecurity.security.AuthenticationProvider;
-import com.example.webfluxsecurity.security.JwtTokenProvider;
+import com.example.webfluxsecurity.security.authentication.AuthenticationProvider;
+import com.example.webfluxsecurity.security.jwtprovider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -15,14 +15,13 @@ import java.util.function.Function;
 public class BearerTokenServerAuthenticationConverter implements ServerAuthenticationConverter {
     private final AuthenticationProvider authenticationProvider;
     private final JwtTokenProvider jwtTokenProvider;
-    private static final String BEARER_PREFIX = "Bearer_";
-    private static final Function<String, Mono<String>> getBearerValue = authValue -> Mono.justOrEmpty(authValue.substring(BEARER_PREFIX.length()));
 
+    private final String BEARER_PREFIX = "Bearer_";
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
         return extractHeader(exchange)
-                .flatMap(getBearerValue)
+                .flatMap(authValue -> Mono.justOrEmpty(authValue.substring(BEARER_PREFIX.length())))
                 .flatMap(jwtTokenProvider::validateToken)
                 .flatMap(authenticationProvider::create);
     }

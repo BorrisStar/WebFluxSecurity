@@ -1,4 +1,4 @@
-package com.example.webfluxsecurity.security;
+package com.example.webfluxsecurity.security.jwtprovider;
 
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.exception.AuthException;
@@ -7,12 +7,10 @@ import com.example.webfluxsecurity.repository.UserRepository;
 import com.example.webfluxsecurity.security.model.TokenDetails;
 import com.example.webfluxsecurity.security.model.TokenValidationResult;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -88,7 +86,7 @@ public class JwtTokenProvider {
             TokenValidationResult tokenValidationResult = new TokenValidationResult(claims, token);
 
             return Mono.just(tokenValidationResult)
-                    .onErrorResume(ex-> Mono.error(new UnauthorizedException("User unauthorized!")));
+                    .onErrorResume(ex -> Mono.error(new UnauthorizedException("User unauthorized!")));
 
         } catch (JwtException | IllegalArgumentException e) {
             throw new AuthException("JWT token is invalid!", "TOKEN_INVALID");
