@@ -22,7 +22,7 @@ public class UserService {
         return userRepository.save(
                 user.toBuilder()
                         .password(passwordEncoder.encode(user.getPassword()))
-                        .role(UserRole.USER)
+                        .role(user.getRole())
                         .enabled(true)
                         .createdAt(LocalDateTime.now())
                         .updatedAt(LocalDateTime.now())

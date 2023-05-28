@@ -26,17 +26,19 @@ dependencies {
 	implementation "org.flywaydb:flyway-core:$flywayDbVersion"
 	implementation "com.google.code.findbugs:jsr305:$googleFindBugsVersion"
 
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
 	implementation "org.mapstruct:mapstruct:$mapStructVersion"
 	implementation "org.mapstruct:mapstruct-processor:$mapStructVersion"
 	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
 
 	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+
 	implementation "io.jsonwebtoken:jjwt-api:$jsonWebTokenVersion"
 	implementation "io.jsonwebtoken:jjwt-impl:$jsonWebTokenVersion"
 	implementation "io.jsonwebtoken:jjwt-jackson:$jsonWebTokenVersion"
 	implementation "jakarta.xml.bind:jakarta.xml.bind-api:$jaxbApiVersion"
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly "org.postgresql:postgresql:$postgresqlVersion"
 	runtimeOnly "io.r2dbc:r2dbc-postgresql:$r2dbcVersion"

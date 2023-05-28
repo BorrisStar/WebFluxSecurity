@@ -1,4 +1,4 @@
-package com.example.webfluxsecurity.security.jwtprovider;
+package com.example.webfluxsecurity.security.service;
 
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.exception.AuthException;
@@ -20,7 +20,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenService {
     @Value("${jwt.expiration}")
     private Integer expirationInMilliSeconds;
     @Value("${jwt.issuer}")
@@ -31,7 +31,7 @@ public class JwtTokenProvider {
 
     private final Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secret, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public JwtTokenService(@Value("${jwt.secret}") String secret, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
@@ -55,6 +55,7 @@ public class JwtTokenProvider {
                 .compact();
 
         return TokenDetails.builder()
+                .userId(user.getId())
                 .token(token)
                 .issuedAt(now)
                 .expiresAt(expirationDate)
@@ -70,7 +71,8 @@ public class JwtTokenProvider {
                             if (!passwordEncoder.matches(password, user.getPassword())) {
                                 return Mono.error(new AuthException("Password incorrect!", "PASSWORD_INCORRECT"));
                             }
-                            return Mono.just(new TokenDetails());
+                            TokenDetails tokenDetails = generateToken(user);
+                            return Mono.just(tokenDetails);
                         }
                 ).switchIfEmpty(Mono.error(new AuthException("Invalid username!", "INVALID_USERNAME")));
     }

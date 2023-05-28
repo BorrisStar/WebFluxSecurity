@@ -2,7 +2,7 @@ package com.example.webfluxsecurity.security.config;
 
 import com.example.webfluxsecurity.security.authentication.AuthenticationManager;
 import com.example.webfluxsecurity.security.authentication.AuthenticationProvider;
-import com.example.webfluxsecurity.security.jwtprovider.JwtTokenProvider;
+import com.example.webfluxsecurity.security.service.JwtTokenService;
 import com.example.webfluxsecurity.security.converter.BearerTokenServerAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
     private final AuthenticationManager authenticationManager;
     private final AuthenticationProvider authenticationProvider;
 
@@ -59,7 +59,7 @@ public class WebSecurityConfig {
         bearerAuthenticationFilter.setServerAuthenticationConverter(
                 new BearerTokenServerAuthenticationConverter(
                         authenticationProvider,
-                        jwtTokenProvider)
+                        jwtTokenService)
         );
 
         bearerAuthenticationFilter.setRequiresAuthenticationMatcher(ServerWebExchangeMatchers.pathMatchers("/**"));

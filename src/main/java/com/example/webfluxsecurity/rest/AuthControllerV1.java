@@ -5,7 +5,7 @@ import com.example.webfluxsecurity.dto.AuthResponseDto;
 import com.example.webfluxsecurity.dto.UserDto;
 import com.example.webfluxsecurity.entity.UserEntity;
 import com.example.webfluxsecurity.mapper.UserMapper;
-import com.example.webfluxsecurity.security.jwtprovider.JwtTokenProvider;
+import com.example.webfluxsecurity.security.service.JwtTokenService;
 import com.example.webfluxsecurity.security.model.CustomPrincipal;
 import com.example.webfluxsecurity.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthControllerV1 {
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -35,7 +35,7 @@ public class AuthControllerV1 {
 
     @PostMapping("/login")
     public Mono<AuthResponseDto> login(@RequestBody AuthRequestDto dto) {
-        return jwtTokenProvider.authenticate(dto.getUsername(), dto.getPassword())
+        return jwtTokenService.authenticate(dto.getUsername(), dto.getPassword())
                 .flatMap(tokenDetails -> Mono.just(
                         AuthResponseDto.builder()
                                 .userId(tokenDetails.getUserId())
