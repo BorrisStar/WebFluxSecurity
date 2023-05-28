@@ -40,10 +40,11 @@ public class JwtTokenService {
     private TokenDetails generateToken(UserEntity user) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + expirationInMilliSeconds);
-        String subject = user.getUsername();
+        String subject = String.valueOf(user.getId());
 
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("role", user.getRole().name());
+        claims.put("username", user.getUsername());
 
         String token = Jwts.builder()
                 .setClaims(claims)
