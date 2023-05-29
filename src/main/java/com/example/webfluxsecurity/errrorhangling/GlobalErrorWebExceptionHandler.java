@@ -37,11 +37,9 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
             var props = getErrorAttributes(request, ErrorAttributeOptions.defaults());
             var status = Integer.parseInt(props.getOrDefault("status", HttpStatus.INTERNAL_SERVER_ERROR).toString());
 
-            var response =  ServerResponse.status(status)
+            return ServerResponse.status(status)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(BodyInserters.fromValue(props.get("errors")));
-
-            return response;
         });
     }
 }
